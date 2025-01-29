@@ -8,11 +8,16 @@ BiocManager::install("estellad/SpatialBook_DataLoad")
 
 ```r
 .list_data()
-# [1] "CosMx1k_MouseBrain1"           "Visium_HumanColon_Oliveria"   
-# [3] "Xenium_HumanColon_Oliveria"    "Chromium_HumanBreast_Janesick"
-# [5] "Chromium_HumanColon_Oliveria"  "Xenium_HumanBreast1_Janesick" 
-# [7] "CosMx1k_MouseBrain2"           "CosMx6k_HumanBrain"           
-# [9] "VisiumHD_HumanColon_Oliveria"  "Visium_HumanBreast_Janesick"
+#  [1] "Chromium_HumanBreast_Janesick"
+#  [2] "Chromium_HumanColon_Oliveria" 
+#  [3] "CosMx1k_MouseBrain1"          
+#  [4] "CosMx1k_MouseBrain2"          
+#  [5] "CosMx6k_HumanBrain"           
+#  [6] "Visium_HumanBreast_Janesick"  
+#  [7] "Visium_HumanColon_Oliveria"   
+#  [8] "VisiumHD_HumanColon_Oliveria" 
+#  [9] "Xenium_HumanBreast1_Janesick" 
+# [10] "Xenium_HumanColon_Oliveria"
 ```
 
 ```r
