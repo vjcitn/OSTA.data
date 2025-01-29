@@ -2,7 +2,7 @@
 #' @export
 .list_data <- \(url="https://osf.io/5n4q3") {
     osf <- osf_retrieve_node(url)
-    osf_ls_files(osf)$name
+    sort(osf_ls_files(osf)$name)
 }
 
 #' @importFrom utils zip
