@@ -9,11 +9,13 @@
 #' @importFrom BiocFileCache BiocFileCache bfcquery bfcadd
 #' @importFrom osfr osf_retrieve_node osf_ls_files osf_download
 #' @export
-.load_data <- \(id, ca=BiocFileCache()) {
+.load_data <- \(id, 
+    bfc=BiocFileCache(), 
+    url="https://osf.io/5n4q3") {
     # verify 'id' with informative error if not
-    id <- match.arg(id, .list_data())
+    id <- match.arg(id, .list_data(url))
     # check if already cached
-    q <- bfcquery(ca, id)
+    q <- bfcquery(bfc, id)
     n <- nrow(q)
     i <- 1
     if (n > 1) {
@@ -29,17 +31,19 @@
     osf_download(df, td, recurse=TRUE)
     wd <- getwd()
     setwd(td)
-    zip(zp <- paste0(id, ".zip"), dir())
-    bfcadd(ca, zp, fpath=file.path(".", zp))
+    zip(fnm <- paste0(id, ".zip"), dir())
+    bfcadd(bfc, fnm, fpath=file.path(".", fnm))
 }
 
 #' @importFrom utils unzip
 #' @importFrom VisiumIO TENxVisium TENxVisiumHD import
 #' @importFrom SpatialExperimentIO readCosmxSXE readXeniumSXE
 #' @export
-.read_data <- \(id) {
+.read_data <- \(id,
+    bfc=BiocFileCache(), 
+    url="https://osf.io/5n4q3") {
     # load & unpack
-    pa <- .load_data(id)
+    pa <- .load_data(id, bfc, url)
     td <- tempfile()
     dir.create(td)
     unzip(pa, exdir=td)

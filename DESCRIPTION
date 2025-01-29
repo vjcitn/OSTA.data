@@ -1,5 +1,5 @@
-Package: SODAta
-Title: Bioc spatial book data
+Package: OSTA.data
+Title: OSTA book data
 Depends: R (>= 4.4)
 Version: 0.99.0
 Description: The studio was filled with the rich odour of roses, and when the light 
