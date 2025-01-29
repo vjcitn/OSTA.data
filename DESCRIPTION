@@ -7,11 +7,11 @@ Description: The studio was filled with the rich odour of roses, and when the li
   the heavy scent of lilac, or the more delicate perfume of the pink-flowering thorn.
 Authors@R: c(
     person("Yixing E.", "Dong",
-        role=c("aut"),
+        role=c("aut", "cre"),
         email="estelladong729@gmail.com",
         comment=c(ORCID="0009-0003-5115-5686")),
-	person("Helena L.", "Crowell", 
-	    role=c("aut", "cre"),
+    person("Helena L.", "Crowell", 
+	    role=c("aut"),
 	    email="helena@crowell.eu", 
 	    comment=c(ORCID="0000-0002-4801-1767")),
     person("Vince", "Carey",
