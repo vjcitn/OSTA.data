@@ -1,4 +1,3 @@
-
 #osf <- osf_retrieve_node("https://osf.io/5n4q3")
 #(dir <- osf_ls_files(osf, pattern="Janesick")$name)
 
