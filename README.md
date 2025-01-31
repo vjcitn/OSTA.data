@@ -3,7 +3,7 @@
 ```r
 if (!require("BiocManager", quietly=TRUE))
     install.packages("BiocManager")
-BiocManager::install("estellad/SpatialBook_DataLoad")
+BiocManager::install("estellad/OSTA.data")
 ```
 
 ```r
