@@ -1,32 +1,52 @@
 ---
-title: "`OSTA.data`"
+title: "OSTA.data"
+package: OSTA.data
 author:
 - name: Yixing E Dong
   affiliation: University of Lausanne, Lausanne, Switzerland
 - name: Helena L Crowell
   affiliation: National Center for Genomic Analysis, Barcelona, Spain
 - name: Vincent J Carey
-  affilication: Harvard Medical School, Boston, USA
+  affiliation: Harvard Medical School, Boston, USA
 date: "`r format(Sys.time(), '%B %d, %Y')`"
+
 vignette: >
   %\VignetteEngine{knitr::rmarkdown}
-  %\VignetteIndexEntry{OSTA datasets}
+  %\VignetteIndexEntry{OSTA.data}
   %\VignetteEncoding{UTF-8}
 output:
   BiocStyle::html_document:
-    highlight: pygments
-    number_sections: yes
-    theme: united
     toc: yes
+    toc_float: true
+    number_sections: yes
 ---
 
 ```{r deps, message=FALSE, warning=FALSE}
 library(VisiumIO)
 library(OSTA.data)
+library(DropletUtils)
 library(SpatialExperimentIO)
 ```
 
 # Introduction
+
+`OSTA.data` is a company package for the "Orchestrating Spatial 
+Transcriptomics Analysis" (OSTA) with Bioconductor online book.
+
+Throughout OSTA, we rely on a set of publicly available datasets
+that cover different sequencing- and imaging-based platforms, namely: 
+Visium, Visium HD, Xenium (10x Genomics) and CosMx (NanoString). 
+In addition, we rely on scRNA-seq (Chromium) data for tasks such as 
+spot deconvolution and label transfer (i.e., supervised clustering).
+
+These data been deposited in an Open Storage Framework (OSF) repository
+[here](https://osf.io/5n4q3), and can be easily queried and downloaded 
+using functions from the `r BiocStyle::CRANpkg("osfr")` package.
+
+For convenience, we have implemented `OSTA.data` to:
+
+- query and retrieve data from our OSF node
+- cache the *.zip* archive using `r BiocStyle::Biocpkg("BiocFileCache")`
 
 A list of currently available datasets maybe be viewer via:
 
@@ -65,6 +85,7 @@ Here, we demonstrate how to
 
 - read Xenium and CosMx data using `r BiocStyle::Biocpkg("SpatialExperimentIO")`
 - read Visium and Visium HD data using `r BiocStyle::Biocpkg("VisiumIO")`
+- read Chromium data using `r BiocStyle::Biocpkg("DropletUtils")`
 
 both of which return a `r BiocStyle::Biocpkg("SpatialExperiment")` object.
 
@@ -116,6 +137,19 @@ obj <- TENxVisiumHD(
     images="lowres", 
     format="h5")
 (spe <- import(obj))
+```
+
+## Chromium
+
+```{r sce}
+# retrieval
+id <- "Chromium_HumanBreast_Janesick"
+pa <- OSTA.data_load(id)
+dir.create(td <- tempfile())
+unzip(pa, exdir=td)
+# importing
+h5 <- list.files(td, "h5$", full.names=TRUE)
+(sce <- read10xCounts(h5))
 ```
 
 # Session

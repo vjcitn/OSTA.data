@@ -24,6 +24,7 @@ Imports:
     BiocFileCache
 Suggests:
     BiocStyle,
+    DropletUtils,
     knitr,
     VisiumIO,
     SpatialExperimentIO
