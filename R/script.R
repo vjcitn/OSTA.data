@@ -1,6 +1,39 @@
+#' @name OSTA.data
+#' @title Datasets used in OSTA
+#' @aliases OSTA.data_list OSTA.data_load
+#' 
+#' @param id character string; dataset identifier
+#'   (see \code{\link{OSTA.data_list}} for valid options)
+#' @param url character string; an OSF identifier
+#'   (passed to \code{\link[osfr]{osf_retrieve_node}})
+#' @param bfc \code{\link[BiocFileCache]{BiocFileCache}}
+#'   instance giving the location of files stored on disk
+#' @param pol,mol logical scalar; specifies whether or not 
+#'   to retrieve boundaries and molecules, respectively
+#' 
+#' @examples
+#' # view available datasets
+#' OSTA.data_list()
+#' 
+#' # retrieve 10x Xenium data from Oliveria et al.
+#' id <- "Xenium_HumanColon_Oliveria"
+#' pa <- OSTA.data_load(id)
+#' 
+#' # unpack & view contents
+#' td <- tempfile()
+#' dir.create(td)
+#' unzip(pa, exdir=td)
+#' list.files(td)
+#' 
+#' # read into 'SpatialExperiment'
+#' library(SpatialExperimentIO)
+#' (spe <- readXeniumSXE(td))
+NULL
+
 #' @importFrom osfr osf_retrieve_node osf_ls_files
+#' @rdname OSTA.data
 #' @export
-.list_data <- \(url="https://osf.io/5n4q3") {
+OSTA.data_list <- \(url="https://osf.io/5n4q3") {
     osf <- osf_retrieve_node(url)
     sort(osf_ls_files(osf)$name)
 }
@@ -8,12 +41,18 @@
 #' @importFrom utils zip
 #' @importFrom BiocFileCache BiocFileCache bfcquery bfcadd
 #' @importFrom osfr osf_retrieve_node osf_ls_files osf_download
+#' @rdname OSTA.data
 #' @export
-.load_data <- \(id, 
+OSTA.data_load <- \(id, 
     bfc=BiocFileCache(), 
-    url="https://osf.io/5n4q3") {
+    url="https://osf.io/5n4q3",
+    pol=TRUE, mol=TRUE) {
+    stopifnot(
+        is.character(id), length(id) == 1,
+        is.logical(pol), length(pol) == 1,
+        is.logical(mol), length(mol) == 1)
     # verify 'id' with informative error if not
-    id <- match.arg(id, .list_data(url))
+    id <- match.arg(id, OSTA.data_list(url))
     # check if already cached
     q <- bfcquery(bfc, id)
     n <- nrow(q)
@@ -27,6 +66,8 @@
     # retrieve, zip, cache & return path
     no <- osf_retrieve_node(url)
     df <- osf_ls_files(no, id)
+    if (!pol) df <- df[!grepl("bound|poly", df$name), ]
+    if (!mol) df <- df[!grepl("tx|scripts", df$name), ]
     dir.create(td <- tempfile())
     osf_download(df, td, recurse=TRUE)
     wd <- getwd()
@@ -35,32 +76,32 @@
     bfcadd(bfc, fnm, fpath=file.path(".", fnm))
 }
 
-#' @importFrom utils unzip
-#' @importFrom VisiumIO TENxVisium TENxVisiumHD import
-#' @importFrom SpatialExperimentIO readCosmxSXE readXeniumSXE
-#' @export
-.read_data <- \(id,
-    bfc=BiocFileCache(), 
-    url="https://osf.io/5n4q3") {
-    # load & unpack
-    pa <- .load_data(id, bfc, url)
-    td <- tempfile()
-    dir.create(td)
-    unzip(pa, exdir=td)
-    # infer platform from dataset identifier
-    pt <- c("Visium", "VisiumHD", "CosMx", "Xenium")
-    pt <- names(which(vapply(pt, \(.) grepl(., id), logical(1))))
-    stopifnot("couldn't detect platform"=length(pt) > 0)
-    if (length(pt) == 2) pt <- pt[2] # Visium HD
-    # read into 'SpatialExperiment'
-    switch(pt,
-        CosMx=readCosmxSXE(td, addParquetPaths=TRUE),
-        Xenium=readXeniumSXE(td, addParquetPaths=TRUE),
-        { # Visium(HD):
-            fun <- get(paste0("TENx", pt))
-            fun(spacerangerOut=td,
-                images="lowres",
-                format="h5") |>
-                import()
-        })
-}
+#' #' @importFrom utils unzip
+#' #' @importFrom VisiumIO TENxVisium TENxVisiumHD import
+#' #' @importFrom SpatialExperimentIO readCosmxSXE readXeniumSXE
+#' #' @export
+#' .read_data <- \(id,
+#'     bfc=BiocFileCache(), 
+#'     url="https://osf.io/5n4q3") {
+#'     # load & unpack
+#'     pa <- .load_data(id, bfc, url)
+#'     td <- tempfile()
+#'     dir.create(td)
+#'     unzip(pa, exdir=td)
+#'     # infer platform from dataset identifier
+#'     pt <- c("Visium", "VisiumHD", "CosMx", "Xenium")
+#'     pt <- names(which(vapply(pt, \(.) grepl(., id), logical(1))))
+#'     stopifnot("couldn't detect platform"=length(pt) > 0)
+#'     if (length(pt) == 2) pt <- pt[2] # Visium HD
+#'     # read into 'SpatialExperiment'
+#'     switch(pt,
+#'         CosMx=readCosmxSXE(td, addParquetPaths=TRUE),
+#'         Xenium=readXeniumSXE(td, addParquetPaths=TRUE),
+#'         { # Visium(HD):
+#'             fun <- get(paste0("TENx", pt))
+#'             fun(spacerangerOut=td,
+#'                 images="lowres",
+#'                 format="h5") |>
+#'                 import()
+#'         })
+#' }

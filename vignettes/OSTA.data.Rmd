@@ -1,0 +1,74 @@
+---
+title: "`OSTA.data`"
+author:
+- name: Yixing E Dong
+  affiliation: University of Lausanne, Lausanne, Switzerland
+- name: Helena L Crowell
+  affiliation: National Center for Genomic Analysis, Barcelona, Spain
+- name: Vincent J Carey
+  affilication: Harvard Medical School, Boston, USA
+date: "`r format(Sys.time(), '%B %d, %Y')`"
+vignette: >
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteIndexEntry{OSTA datasets}
+  %\VignetteEncoding{UTF-8}
+output:
+  BiocStyle::html_document:
+    highlight: pygments
+    number_sections: yes
+    theme: united
+    toc: yes
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo=TRUE)
+```
+
+# Introduction
+
+A list of currently available datasets maybe be viewer via:
+
+```{r list}
+OSTA.data_list()
+```
+
+# Retrieval
+
+Any of the above may be retrieved using `OSTA.data_load()`.
+
+For imaging-based spatial transcriptomics datasets (namely, CosMx and Xenium),
+arguments `pol` and `mol` specify whether or not cell segmentation boundaries
+and data on transcript molecules should be retrieved (both default to `TRUE`).
+
+```{r load}
+id <- "Xenium_HumanColon_Oliveria"
+pa <- OSTA.data_load(id)
+basename(pa)
+```
+
+Once we have downloaded the *.zip* archive, we can unpack into a designated 
+location (e.g., a working directory subfolder), or a temporary location:
+
+```{r uzip}
+# create temporary directory
+dir.create(td <- tempfile())
+unzip(pa, exdir=td) # unzip
+list.files(td) # list files
+```
+
+# Importing
+
+Data is all set. We can now read it into R using a framework of our choice;
+here, we use the `r BiocStyle::Biocpkg("SpatialExperimentIO")` package
+to read the data into a `r BiocStyle::Biocpkg("SpatialExperiment")`:
+
+```{r read, message=FALSE}
+library(SpatialExperimentIO)
+(spe <- readXeniumSXE(td))
+```
+
+# Session
+
+```{r si}
+sessionInfo()
+```

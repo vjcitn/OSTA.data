@@ -21,16 +21,16 @@ Authors@R: c(
 Imports:
     osfr,
     utils,
-    VisiumIO,
-    BiocFileCache,
-    SpatialExperiment,
-    SpatialExperimentIO
+    BiocFileCache
 Suggests:
     BiocStyle,
-    knitr
+    knitr,
+    VisiumIO,
+    SpatialExperimentIO
 biocViews: 
     DataImport, 
     DataRepresentation, 
+    ExperimentHubSoftware,
     Infrastructure, 
     ImmunoOncology, 
     GeneExpression, 

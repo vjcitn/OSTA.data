@@ -3,6 +3,8 @@
 export(.list_data)
 export(.load_data)
 export(.read_data)
+export(OSTA.data_list)
+export(OSTA.data_load)
 importFrom(BiocFileCache,BiocFileCache)
 importFrom(BiocFileCache,bfcadd)
 importFrom(BiocFileCache,bfcquery)
