@@ -20,8 +20,10 @@ output:
     toc: yes
 ---
 
-```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo=TRUE)
+```{r deps, message=FALSE, warning=FALSE}
+library(VisiumIO)
+library(OSTA.data)
+library(SpatialExperimentIO)
 ```
 
 # Introduction
@@ -58,13 +60,62 @@ list.files(td) # list files
 
 # Importing
 
-Data is all set. We can now read it into R using a framework of our choice;
-here, we use the `r BiocStyle::Biocpkg("SpatialExperimentIO")` package
-to read the data into a `r BiocStyle::Biocpkg("SpatialExperiment")`:
+Data is all set, and can be read it into R using a framework of our choice.
+Here, we demonstrate how to
 
-```{r read, message=FALSE}
-library(SpatialExperimentIO)
+- read Xenium and CosMx data using `r BiocStyle::Biocpkg("SpatialExperimentIO")`
+- read Visium and Visium HD data using `r BiocStyle::Biocpkg("VisiumIO")`
+
+both of which return a `r BiocStyle::Biocpkg("SpatialExperiment")` object.
+
+## Xenium
+
+```{r xen}
 (spe <- readXeniumSXE(td))
+```
+
+## CosMx
+
+```{r cos}
+# retrieval
+id <- "CosMx1k_MouseBrain1"
+pa <- OSTA.data_load(id, mol=FALSE)
+dir.create(td <- tempfile())
+unzip(pa, exdir=td)
+# importing
+(spe <- readCosmxSXE(td))
+```
+
+## Visium
+
+```{r vis}
+# retrieval
+id <- "Visium_HumanColon_Oliveria"
+pa <- OSTA.data_load(id)
+dir.create(td <- tempfile())
+unzip(pa, exdir=td)
+# importing
+obj <- TENxVisium(
+    spacerangerOut=td, 
+    images="lowres", 
+    format="h5")
+(spe <- import(obj))
+```
+
+## VisiumHD
+
+```{r vhd}
+# retrieval
+id <- "VisiumHD_HumanColon_Oliveria"
+pa <- OSTA.data_load(id)
+dir.create(td <- tempfile())
+unzip(pa, exdir=td)
+# importing
+obj <- TENxVisiumHD(
+    spacerangerOut=td, 
+    images="lowres", 
+    format="h5")
+(spe <- import(obj))
 ```
 
 # Session
