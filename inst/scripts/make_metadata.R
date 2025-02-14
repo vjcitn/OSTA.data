@@ -14,7 +14,7 @@ base <- data.frame(
   DispatchClass="Zip",
   RDataPath="OSTA.data")
 
-## Oliveira
+## Oliveria
 url_oli <- "https://www.10xgenomics.com/products/visium-hd-spatial-gene-expression/dataset-human-crc"
 
 oli_chm <- data.frame(base,
@@ -85,7 +85,7 @@ cos_mb1 <- data.frame(base,
     DataProvider="Nanostring",
     Tags="CosMx1k:MouseBrain1",
     Title="CosMx1k_MouseBrain1",
-    Description="Nanostring CosMx 1k panel data on mouse brain coronal hemisphere - half")
+    Description="NanoString CosMx data (1k-plex) on mouse brain coronal hippocampus and cortex - quarter")
 
 cos_mb2 <- data.frame(base,
     SourceUrl=url_cosmouse,
@@ -93,31 +93,20 @@ cos_mb2 <- data.frame(base,
     DataProvider="Nanostring",
     Tags="CosMx1k:MouseBrain2",
     Title="CosMx1k_MouseBrain2",
-    Description="Nanostring CosMx 1k panel data on mouse brain coronal hippocampus and cortex - quarter")
+    Description="NanoString CosMx data (1k-plex) on mouse brain coronal hemisphere - half")
 
-
-# ------
 cos_hb <- data.frame(base,
     SourceUrl="https://nanostring.com/products/cosmx-spatial-molecular-imager/ffpe-dataset/human-frontal-cortex-ffpe-dataset/",
     Species="Homo sapiens",
     DataProvider="Nanostring",
     Tags="CosMx6k:HumanBrain",
     Title="CosMx6k_HumanBrain",
-    Description="Nanostring CosMx 6k panel data on human frontal cortex")
+    Description="NanoString CosMx data (6k-plex) on human frontal cortex")
 
-    
 (df <- rbind(
-  oli_chm,
-  oli_vis, 
-  oli_vhd,
-  oli_xem,
-  jan_chm,
-  jan_vis,
-  jan_xem,
-  cos_mb1,
-  cos_mb2,
-  cos_hb
-))
+  oli_chm, oli_vis, oli_vhd, oli_xem,
+  jan_chm, jan_vis, jan_xem,
+  cos_mb1, cos_mb2, cos_hb))
 
 write.csv(df, file.path("inst", "extdata", "metadata.csv"))
 md <- ExperimentHubData::makeExperimentHubMetadata(".")
