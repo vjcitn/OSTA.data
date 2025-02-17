@@ -1,6 +1,6 @@
 Package: OSTA.data
 Title: OSTA book data
-Depends: R (>= 4.4)
+Depends: R (>= 4.5)
 Version: 0.99.0
 Description: The studio was filled with the rich odour of roses, and when the light 
   summer wind stirred amidst the trees of the garden, there came through the open door
