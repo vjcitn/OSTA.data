@@ -11,6 +11,8 @@
 #' @param pol,mol logical scalar; specifies whether or not 
 #'   to retrieve boundaries and molecules, respectively
 #' 
+#' @returns character string; path to the Zip archive
+#' 
 #' @examples
 #' # view available datasets
 #' OSTA.data_list()

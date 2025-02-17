@@ -29,6 +29,9 @@ instance giving the location of files stored on disk}
 \item{pol, mol}{logical scalar; specifies whether or not 
 to retrieve boundaries and molecules, respectively}
 }
+\value{
+character string; path to the Zip archive
+}
 \description{
 Datasets used in OSTA
 }
