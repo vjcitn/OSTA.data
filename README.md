@@ -7,7 +7,7 @@ BiocManager::install("estellad/OSTA.data")
 ```
 
 ```r
-.list_data()
+OSTA.data_list()
 #  [1] "Chromium_HumanBreast_Janesick"
 #  [2] "Chromium_HumanColon_Oliveira" 
 #  [3] "CosMx1k_MouseBrain1"          
@@ -21,7 +21,14 @@ BiocManager::install("estellad/OSTA.data")
 ```
 
 ```r
-(spe <- .read_data("Xenium_HumanColon_Oliveira"))
+# retrieval
+pa <- OSTA.data_load("Xenium_HumanColon_Oliveira")
+# unpacking
+dir.create(td <- tempfile())
+unzip(pa, exdir=td)
+# importing
+library(SpatialExperimentIO)
+(spe <- readXeniumSXE(td))
 # class: SpatialExperiment 
 # dim: 541 340837 
 # metadata(3): transcripts cell_boundaries nucleus_boundaries
