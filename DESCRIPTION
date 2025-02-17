@@ -2,9 +2,18 @@ Package: OSTA.data
 Title: OSTA book data
 Depends: R (>= 4.5)
 Version: 0.99.0
-Description: The studio was filled with the rich odour of roses, and when the light 
-  summer wind stirred amidst the trees of the garden, there came through the open door
-  the heavy scent of lilac, or the more delicate perfume of the pink-flowering thorn.
+Description: 
+  'OSTA.data' is a companion package for the "Orchestrating Spatial 
+  Transcriptomics Analysis" (OSTA) with Bioconductor online book.
+  Throughout OSTA, we rely on a set of publicly available datasets 
+  that cover different sequencing- and imaging-based platforms, such
+  as Visium, Visium HD, Xenium (10x Genomics) and CosMx (NanoString). 
+  In addition, we rely on scRNA-seq (Chromium) data for tasks, e.g., 
+  spot deconvolution and label transfer (i.e., supervised clustering).
+  These data been deposited in an Open Storage Framework (OSF) repository, 
+  and can be queried and downloaded using functions from the 'osfr' package. 
+  For convenience, we have implemented 'OSTA.data' to query and retrieve data
+  from our OSF node, and cache retrieved Zip archives using 'BiocFileCache'.
 Authors@R: c(
     person("Yixing E.", "Dong",
         role=c("aut", "cre"),
