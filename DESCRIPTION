@@ -47,9 +47,9 @@ biocViews:
     Transcriptomics, 
     SingleCell,
     Spatial
-License: file LICENSE
-RoxygenNote: 7.3.2
 Encoding: UTF-8
+RoxygenNote: 7.3.2
+License: Artistic-2.0
 VignetteBuilder: knitr
 URL: https://github.com/estellad/OSTA.data
 BugReports: https://github.com/estellad/OSTA.data
