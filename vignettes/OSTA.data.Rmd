@@ -63,7 +63,7 @@ arguments `pol` and `mol` specify whether or not cell segmentation boundaries
 and data on transcript molecules should be retrieved (both default to `TRUE`).
 
 ```{r load}
-id <- "Xenium_HumanColon_Oliveria"
+id <- "Xenium_HumanColon_Oliveira"
 pa <- OSTA.data_load(id)
 basename(pa)
 ```
@@ -111,7 +111,7 @@ unzip(pa, exdir=td)
 
 ```{r vis}
 # retrieval
-id <- "Visium_HumanColon_Oliveria"
+id <- "Visium_HumanColon_Oliveira"
 pa <- OSTA.data_load(id)
 dir.create(td <- tempfile())
 unzip(pa, exdir=td)
@@ -127,7 +127,7 @@ obj <- TENxVisium(
 
 ```{r vhd}
 # retrieval
-id <- "VisiumHD_HumanColon_Oliveria"
+id <- "VisiumHD_HumanColon_Oliveira"
 pa <- OSTA.data_load(id)
 dir.create(td <- tempfile())
 unzip(pa, exdir=td)

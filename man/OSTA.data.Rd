@@ -61,8 +61,8 @@ The following datasets are currently available:\itemize{
 # view available datasets
 OSTA.data_list()
 
-# retrieve 10x Xenium data from Oliveria et al.
-id <- "Xenium_HumanColon_Oliveria"
+# retrieve 10x Xenium data from Oliveira et al.
+id <- "Xenium_HumanColon_Oliveira"
 pa <- OSTA.data_load(id)
 
 # unpack & view contents

@@ -14,7 +14,7 @@ base <- data.frame(
   DispatchClass="Zip",
   RDataPath="OSTA.data")
 
-## Oliveria
+## Oliveira
 url_oli <- "https://www.10xgenomics.com/products/visium-hd-spatial-gene-expression/dataset-human-crc"
 cc4 <- "Creative Commons Attribution 4.0 International (CC BY 4.0)"
 
@@ -22,8 +22,8 @@ oli_chm <- data.frame(base,
     SourceUrl=url_oli,
     Species="Homo sapiens",
     DataProvider="10x Genomics",
-    Tags="Oliveria:Chromium",
-    Title="Chromium_HumanColon_Oliveria",
+    Tags="Oliveira:Chromium",
+    Title="Chromium_HumanColon_Oliveira",
     Description="10x Genomics Chromium data on human colorecal cancer",
     Licence=cc4)
 
@@ -31,8 +31,8 @@ oli_vis <- data.frame(base,
     SourceUrl=url_oli,
     Species="Homo sapiens",
     DataProvider="10x Genomics",
-    Tags="Oliveria:Visium",
-    Title="Visium_HumanColon_Oliveria",
+    Tags="Oliveira:Visium",
+    Title="Visium_HumanColon_Oliveira",
     Description="10x Genomics Visium data on human colorecal cancer",
     Licence=cc4)
 
@@ -40,8 +40,8 @@ oli_vhd <- data.frame(base,
     SourceUrl=url_oli,
     Species="Homo sapiens",
     DataProvider="10x Genomics",
-    Tags="Oliveria:VisiumHD",
-    Title="VisiumHD_HumanColon_Oliveria",
+    Tags="Oliveira:VisiumHD",
+    Title="VisiumHD_HumanColon_Oliveira",
     Description="10x Genomics VisiumHD data on human colorecal cancer",
     Licence=cc4)
 
@@ -49,8 +49,8 @@ oli_xem <- data.frame(base,
     SourceUrl=url_oli,
     Species="Homo sapiens",
     DataProvider="10x Genomics",
-    Tags="Oliveria:Xenium",
-    Title="Xenium_HumanColon_Oliveria",
+    Tags="Oliveira:Xenium",
+    Title="Xenium_HumanColon_Oliveira",
     Description="10x Genomics Xenium data on human colorecal cancer",
     Licence=cc4)
 
