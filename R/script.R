@@ -75,33 +75,3 @@ OSTA.data_load <- \(id,
     zip(fnm <- paste0(id, ".zip"), dir())
     bfcadd(bfc, fnm, fpath=file.path(".", fnm))
 }
-
-#' #' @importFrom utils unzip
-#' #' @importFrom VisiumIO TENxVisium TENxVisiumHD import
-#' #' @importFrom SpatialExperimentIO readCosmxSXE readXeniumSXE
-#' #' @export
-#' .read_data <- \(id,
-#'     bfc=BiocFileCache(), 
-#'     url="https://osf.io/5n4q3") {
-#'     # load & unpack
-#'     pa <- .load_data(id, bfc, url)
-#'     td <- tempfile()
-#'     dir.create(td)
-#'     unzip(pa, exdir=td)
-#'     # infer platform from dataset identifier
-#'     pt <- c("Visium", "VisiumHD", "CosMx", "Xenium")
-#'     pt <- names(which(vapply(pt, \(.) grepl(., id), logical(1))))
-#'     stopifnot("couldn't detect platform"=length(pt) > 0)
-#'     if (length(pt) == 2) pt <- pt[2] # Visium HD
-#'     # read into 'SpatialExperiment'
-#'     switch(pt,
-#'         CosMx=readCosmxSXE(td, addParquetPaths=TRUE),
-#'         Xenium=readXeniumSXE(td, addParquetPaths=TRUE),
-#'         { # Visium(HD):
-#'             fun <- get(paste0("TENx", pt))
-#'             fun(spacerangerOut=td,
-#'                 images="lowres",
-#'                 format="h5") |>
-#'                 import()
-#'         })
-#' }
