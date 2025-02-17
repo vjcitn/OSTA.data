@@ -43,8 +43,3 @@ library(SpatialExperimentIO)
 # spatialCoords names(2) : x_centroid y_centroid
 # imgData names(0):
 ```
-
-**TODO:**
-
-- function documentation & vignette
-- provenance & source information
