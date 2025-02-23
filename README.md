@@ -7,21 +7,28 @@ BiocManager::install("estellad/OSTA.data")
 ```
 
 ```r
-.list_data()
+OSTA.data_list()
 #  [1] "Chromium_HumanBreast_Janesick"
-#  [2] "Chromium_HumanColon_Oliveria" 
+#  [2] "Chromium_HumanColon_Oliveira" 
 #  [3] "CosMx1k_MouseBrain1"          
 #  [4] "CosMx1k_MouseBrain2"          
 #  [5] "CosMx6k_HumanBrain"           
 #  [6] "Visium_HumanBreast_Janesick"  
-#  [7] "Visium_HumanColon_Oliveria"   
-#  [8] "VisiumHD_HumanColon_Oliveria" 
+#  [7] "Visium_HumanColon_Oliveira"   
+#  [8] "VisiumHD_HumanColon_Oliveira" 
 #  [9] "Xenium_HumanBreast1_Janesick" 
-# [10] "Xenium_HumanColon_Oliveria"
+# [10] "Xenium_HumanColon_Oliveira"
 ```
 
 ```r
-(spe <- .read_data("Xenium_HumanColon_Oliveria"))
+# retrieval
+pa <- OSTA.data_load("Xenium_HumanColon_Oliveira")
+# unpacking
+dir.create(td <- tempfile())
+unzip(pa, exdir=td)
+# importing
+library(SpatialExperimentIO)
+(spe <- readXeniumSXE(td))
 # class: SpatialExperiment 
 # dim: 541 340837 
 # metadata(3): transcripts cell_boundaries nucleus_boundaries
@@ -36,8 +43,3 @@ BiocManager::install("estellad/OSTA.data")
 # spatialCoords names(2) : x_centroid y_centroid
 # imgData names(0):
 ```
-
-**TODO:**
-
-- function documentation & vignette
-- provenance & source information

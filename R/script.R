@@ -11,12 +11,46 @@
 #' @param pol,mol logical scalar; specifies whether or not 
 #'   to retrieve boundaries and molecules, respectively
 #' 
+#' @details The following datasets are currently available:\itemize{
+#' \item{Janesick \emph{et al.}:
+#'   Visium, Visium HD, Xenium and Chromium
+#'   data on human colorectal cancer;
+#'   source: \href{https://www.10xgenomics.com/products/visium-hd-spatial-gene-expression/dataset-human-crc}{10x Genomics}}
+#' \item{Oliveira \emph{et al.}:
+#'   Visium, Xenium and Chromium
+#'   data on human breast cancer;
+#'   source: \href{https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE243280}{GSE243280}}
+#' \item{1k-plex CosMx data on 2 mouse brain sections
+#'   (coronal hippocampus and cortex, coronal hemisphere)
+#'   source: \href{https://nanostring.com/products/cosmx-spatial-molecular-imager/ffpe-dataset/cosmx-smi-mouse-brain-ffpe-dataset}{NanoString}}
+#' \item{6k-plex CosMx data on human brain (frontal cortex);
+#'   source: \href{https://nanostring.com/products/cosmx-spatial-molecular-imager/ffpe-dataset/human-frontal-cortex-ffpe-dataset}{NanoString}}}
+#' 
+#' @references 
+#' Oliveira \emph{et al.} 
+#' Characterization of immune cell populations in the tumor 
+#' microenvironment of colorectal cancer using high definition 
+#' spatial profiling. \emph{bioRxiv} 2024.06.04.597233 (2024).
+#' 
+#' Janesick \emph{et al.} 
+#' High resolution mapping of the tumor microenvironment 
+#' using integrated single-cell, spatial and in situ analysis.
+#' \emph{Nature Communications} 14:8353 (2023).
+#' 
+#' @returns\itemize{
+#' \item{\code{OSTA.data_list} 
+#'   returns a character vector of 
+#'   currently available datasets}
+#' \item{\code{OSTA.data_load} 
+#'   return a character string;
+#'   the path to a Zip archive}}
+#' 
 #' @examples
 #' # view available datasets
 #' OSTA.data_list()
 #' 
-#' # retrieve 10x Xenium data from Oliveria et al.
-#' id <- "Xenium_HumanColon_Oliveria"
+#' # retrieve 10x Xenium data from Oliveira et al.
+#' id <- "Xenium_HumanColon_Oliveira"
 #' pa <- OSTA.data_load(id)
 #' 
 #' # unpack & view contents
@@ -75,33 +109,3 @@ OSTA.data_load <- \(id,
     zip(fnm <- paste0(id, ".zip"), dir())
     bfcadd(bfc, fnm, fpath=file.path(".", fnm))
 }
-
-#' #' @importFrom utils unzip
-#' #' @importFrom VisiumIO TENxVisium TENxVisiumHD import
-#' #' @importFrom SpatialExperimentIO readCosmxSXE readXeniumSXE
-#' #' @export
-#' .read_data <- \(id,
-#'     bfc=BiocFileCache(), 
-#'     url="https://osf.io/5n4q3") {
-#'     # load & unpack
-#'     pa <- .load_data(id, bfc, url)
-#'     td <- tempfile()
-#'     dir.create(td)
-#'     unzip(pa, exdir=td)
-#'     # infer platform from dataset identifier
-#'     pt <- c("Visium", "VisiumHD", "CosMx", "Xenium")
-#'     pt <- names(which(vapply(pt, \(.) grepl(., id), logical(1))))
-#'     stopifnot("couldn't detect platform"=length(pt) > 0)
-#'     if (length(pt) == 2) pt <- pt[2] # Visium HD
-#'     # read into 'SpatialExperiment'
-#'     switch(pt,
-#'         CosMx=readCosmxSXE(td, addParquetPaths=TRUE),
-#'         Xenium=readXeniumSXE(td, addParquetPaths=TRUE),
-#'         { # Visium(HD):
-#'             fun <- get(paste0("TENx", pt))
-#'             fun(spacerangerOut=td,
-#'                 images="lowres",
-#'                 format="h5") |>
-#'                 import()
-#'         })
-#' }
