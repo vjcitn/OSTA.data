@@ -76,11 +76,12 @@ OSTA.data_list <- \(url="https://osf.io/5n4q3") {
 #' @importFrom BiocFileCache BiocFileCache bfcquery bfcadd
 #' @importFrom osfr osf_retrieve_node osf_ls_files osf_download
 #' @rdname OSTA.data
+#' @param \dots passed to osfr::osf_download
 #' @export
 OSTA.data_load <- \(id, 
     bfc=BiocFileCache(), 
     url="https://osf.io/5n4q3",
-    pol=TRUE, mol=TRUE) {
+    pol=TRUE, mol=TRUE, ...) {
     stopifnot(
         is.character(id), length(id) == 1,
         is.logical(pol), length(pol) == 1,
@@ -103,7 +104,7 @@ OSTA.data_load <- \(id,
     if (!pol) df <- df[!grepl("bound|poly", df$name), ]
     if (!mol) df <- df[!grepl("tx|scripts", df$name), ]
     dir.create(td <- tempfile())
-    osf_download(df, td, recurse=TRUE)
+    osf_download(df, td, recurse=TRUE, ...)
     wd <- getwd()
     setwd(td)
     zip(fnm <- paste0(id, ".zip"), dir())
