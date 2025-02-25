@@ -61,7 +61,10 @@
 #' 
 #' # read into 'SpatialExperiment'
 #' library(SpatialExperimentIO)
-#' (spe <- readXeniumSXE(td))
+#' if (!requireNamespace("SpatialExperimentIO")) {
+#'    message("to work with the data, please install SpatialExperimentIO") } else {
+#' (spe <- SpatialExperimentIO::readXeniumSXE(td))
+#' }
 NULL
 
 #' @importFrom osfr osf_retrieve_node osf_ls_files
